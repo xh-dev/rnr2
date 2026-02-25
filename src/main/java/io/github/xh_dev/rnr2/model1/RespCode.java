@@ -26,7 +26,7 @@ public enum RespCode {
     BusinessError("03"),
     NotFound("04");
 
-    private String code;
+    private final String code;
     RespCode(String code){
         this.code = code;
     }
