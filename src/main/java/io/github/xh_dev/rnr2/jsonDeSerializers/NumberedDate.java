@@ -20,12 +20,8 @@ public class NumberedDate {
     public static class Ser extends JsonSerializer<Date> {
         @Override
         public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            if(date == null){
-                jsonGenerator.writeNull();
-            } else {
-                SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
-                jsonGenerator.writeString(sdf.format(date));
-            }
+            SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
+            jsonGenerator.writeString(sdf.format(date));
         }
     }
 
@@ -33,20 +29,16 @@ public class NumberedDate {
         @Override
         public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
             String s = jsonParser.getText();
-            if(s==null){
-                return null;
-            } else {
-                Matcher matcher = Pattern.compile("[0-9]{14}").matcher(s);
-                if(matcher.matches()){
-                    SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
-                    try {
-                        return sdf.parse(s);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    throw new RuntimeException(String.format("Fail parse date [%s]", s));
+            Matcher matcher = Pattern.compile("\\d{14}").matcher(s);
+            if(matcher.matches()){
+                SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
+                try {
+                    return sdf.parse(s);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
+            } else {
+                throw new RuntimeException(String.format("Fail parse date [%s]", s));
             }
         }
     }

@@ -48,7 +48,7 @@ public class GenericResponse<DATA> {
     public static <DATA> GenericResponse<DATA> validationFail(List<ValidationResultLine> validationResult){
         return GenericResponse.<DATA>builder()
                 .responseCode(RespCode.ValidationFailed)
-                .responseMessage("The input data is correct")
+                .responseMessage("The input data is not correct")
                 .errors( validationResult )
                 .data(null)
                 .build();

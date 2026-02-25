@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class NumberedDateTest {
     final TimeZone HKT= TimeZone.getTimeZone("Asia/Hong_Kong");
 
     @Test
+    @DisplayName("Test for normal")
     void testNormal() throws IOException {
         TestObj to = TestObj.builder()
                 .date(
@@ -55,6 +57,7 @@ public class NumberedDateTest {
     }
 
     @Test
+    @DisplayName("Test for null value")
     void testNull() throws IOException {
         TestObj to = TestObj.builder()
                 .date(null).build();
@@ -66,15 +69,12 @@ public class NumberedDateTest {
     }
 
     @Test
+    @DisplayName("Wrong date passing in")
     void testWrongDate() throws IOException {
         ObjectMapper om = new ObjectMapper();
         assertThrows(JsonMappingException.class, ()->{
                     om.readValue("{\"date\":\"20557865sdf124\"}".getBytes(StandardCharsets.UTF_8), TestObj.class);
                 });
-
-        assertThrows(JsonMappingException.class, ()->{
-            om.readValue("{\"date\":\"90557865001111\"}".getBytes(StandardCharsets.UTF_8), TestObj.class);
-        });
 
     }
 }

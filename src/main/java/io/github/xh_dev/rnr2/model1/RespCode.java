@@ -9,9 +9,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.module.SimpleDeserializers;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -52,20 +49,6 @@ public enum RespCode {
         @Override
         public RespCode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
             return RespCode.ofCode(jsonParser.getText());
-        }
-    }
-
-    public static class RespCodeJacksonModule extends SimpleModule {
-        @Override
-        public void setupModule(SetupContext context) {
-            final SimpleSerializers sers = new SimpleSerializers();
-            final SimpleDeserializers desers = new SimpleDeserializers();
-
-            sers.addSerializer(RespCode.class, new Serializer());
-            desers.addDeserializer(RespCode.class, new Deserializer());
-
-            context.addSerializers(sers);
-            context.addDeserializers(desers);
         }
     }
 }
