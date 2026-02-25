@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.ConstraintViolation;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,8 @@ public class GenericResponse<DATA> {
     @Schema(title = "Response message", description = "Response message for human readable (if any)")
     private String responseMessage;
     @Schema(title = "Request validation results", description = "Request validation failure result (exist when response is `02`)")
-    private List<ValidationResultLine> errors;
+    @Builder.Default
+    private List<ValidationResultLine> errors = new ArrayList<>();
     @Schema(title = "Response data",description = "Response data (exist when response is `00`")
     private DATA data;
 
