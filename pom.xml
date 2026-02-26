@@ -18,14 +18,26 @@
             <id>coverage</id>
             <properties>
                 <sonar.organization>xh-dev</sonar.organization>
-                <sonar.projectKey>rnr2</sonar.projectKey>
+                <sonar.projectKey>xh-dev_rnr2</sonar.projectKey>
             </properties>
+            <dependencyManagement>
+                <!-- Source: https://mvnrepository.com/artifact/org.codehaus.mojo/sonar-maven-plugin -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>5.5.0.6356</version>
+                        <type>pom</type>
+                        <scope>compile</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.7</version>
+                        <version>0.8.14</version>
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
