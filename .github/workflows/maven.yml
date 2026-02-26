@@ -30,7 +30,7 @@ jobs:
 
     - name: Do quality check
       env:
-        TOKEN: ${{ secrets.SonaarToken }}
+        TOKEN: ${{ secrets.SonarToken }}
       run: mvn -Dsonar.token="$TOKEN" -B clean compile test --file pom.xml org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage    
       
     - name: Build with Maven
