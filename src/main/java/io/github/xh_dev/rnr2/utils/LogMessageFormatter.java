@@ -1,8 +1,10 @@
 package io.github.xh_dev.rnr2.utils;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class LogMessageFormatter{
+    public static class FailExtractLoadingClassName extends RuntimeException{}
     private static String loadingClassingName=null;
     private static String loadingMethodName=null;
 
@@ -18,7 +20,12 @@ public class LogMessageFormatter{
         StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
         if (loadingClassingName == null) {
             StackTraceElement curStack = Thread.currentThread().getStackTrace()[1];
-            loadingClassingName = Arrays.stream(curStack.getClassName().split("\\.")).reduce((fisrt, second) -> second).get();
+
+            Optional<String> loadingClassingNameOpt = Arrays.stream(curStack.getClassName().split("\\.")).reduce((fisrt, second) -> second);
+            if(!loadingClassingNameOpt.isPresent()){
+                throw new FailExtractLoadingClassName();
+            }
+            loadingClassingName = loadingClassingNameOpt.get();
         }
         if (loadingMethodName == null) {
             StackTraceElement curStack = Thread.currentThread().getStackTrace()[1];
