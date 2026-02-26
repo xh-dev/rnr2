@@ -9,11 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.TimeZone;
@@ -31,7 +35,12 @@ public class NumberedDateTest {
         private Date date;
     }
 
-    final TimeZone HKT= TimeZone.getTimeZone("Asia/Hong_Kong");
+    final static TimeZone HKT= TimeZone.getTimeZone("Asia/Hong_Kong");
+
+    @BeforeAll
+    public static void setUp() {
+        TimeZone.setDefault(HKT);
+    }
 
     @Test
     @DisplayName("Test for normal")
