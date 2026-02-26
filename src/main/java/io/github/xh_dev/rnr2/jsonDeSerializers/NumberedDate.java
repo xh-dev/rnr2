@@ -16,7 +16,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NumberedDate {
-    private final static String FORMAT="yyyyMMddHHmmss";
+    private NumberedDate(){
+    }
+    private static final String FORMAT="yyyyMMddHHmmss";
     public static class Ser extends JsonSerializer<Date> {
         @Override
         public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
@@ -27,7 +29,7 @@ public class NumberedDate {
 
     public static class Deser extends JsonDeserializer<Date> {
         @Override
-        public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+        public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
             String s = jsonParser.getText();
             Matcher matcher = Pattern.compile("\\d{14}").matcher(s);
             if(matcher.matches()){

@@ -26,7 +26,7 @@ public class GenericResponseTest {
     void testNormal() throws IOException {
         final GenericResponse<String> resp = GenericResponse.data("Success");
         assertEquals(RespCode.Success, resp.getResponseCode());
-        assertEquals("Success", resp.getData());
+        assertEquals("Success", resp.getD());
         assertEquals("", resp.getResponseMessage());
         assertEquals(0, resp.getErrors().size());
     }
@@ -37,7 +37,7 @@ public class GenericResponseTest {
         final GenericResponse<String> resp = GenericResponse.error("Error");
         assertEquals(RespCode.Success, resp.getResponseCode());
         assertEquals("Error", resp.getResponseMessage());
-        assertEquals(null, resp.getData());
+        assertEquals(null, resp.getD());
         assertEquals(0, resp.getErrors().size());
     }
 
@@ -74,7 +74,7 @@ public class GenericResponseTest {
         assertEquals("field1 must not be null", field1.getMessage());
         assertEquals("field2", field2.getField());
         assertEquals("field2 must not be empty", field2.getMessage());
-        assertEquals(null, resp.getData());
+        assertEquals(null, resp.getD());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class GenericResponseTest {
         assertEquals("a is not valid", resp.getErrors().get(0).getMessage());
         assertEquals("a", resp.getErrors().get(1).getField());
         assertEquals("a is not valid", resp.getErrors().get(1).getMessage());
-        assertEquals(null, resp.getData());
+        assertEquals(null, resp.getD());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class GenericResponseTest {
         final GenericResponse<String> resp = GenericResponse.businessError("Business Error");
         assertEquals(RespCode.BusinessError, resp.getResponseCode());
         assertEquals("Business Error", resp.getResponseMessage());
-        assertEquals(null, resp.getData());
+        assertEquals(null, resp.getD());
         assertEquals(0, resp.getErrors().size());
     }
 

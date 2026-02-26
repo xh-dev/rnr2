@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static io.github.xh_dev.rnr2.tz.TZInfo.HKT;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NumberedDateTest {
@@ -35,10 +36,8 @@ public class NumberedDateTest {
         private Date date;
     }
 
-    final static TimeZone HKT= TimeZone.getTimeZone("Asia/Hong_Kong");
-
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         TimeZone.setDefault(HKT);
     }
 

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 @Data
-public class GenericResponse<DATA> {
+public class GenericResponse<D> {
     @Schema(title = "Response Code",description = "Response Code for API request")
     private RespCode responseCode;
     @Schema(title = "Response message", description = "Response message for human readable (if any)")
@@ -25,17 +25,17 @@ public class GenericResponse<DATA> {
     @Builder.Default
     private List<ValidationResultLine> errors = new ArrayList<>();
     @Schema(title = "Response data",description = "Response data (exist when response is `00`")
-    private DATA data;
+    private D d;
 
     public static <DATA> GenericResponse<DATA> notFound(){
         return GenericResponse.<DATA>builder()
                 .responseCode(RespCode.NotFound)
                 .responseMessage("Resource not found")
-                .data(null)
+                .d(null)
                 .build();
     }
 
-    public static <INPUT, DATA> GenericResponse<DATA> validationFail(Collection<ConstraintViolation<INPUT>> validationResult){
+    public static <I, D> GenericResponse<D> validationFail(Collection<ConstraintViolation<I>> validationResult){
         return validationFail(
                 validationResult.stream()
                         .map(i->
@@ -45,36 +45,36 @@ public class GenericResponse<DATA> {
         );
     }
 
-    public static <DATA> GenericResponse<DATA> validationFail(List<ValidationResultLine> validationResult){
-        return GenericResponse.<DATA>builder()
+    public static <D> GenericResponse<D> validationFail(List<ValidationResultLine> validationResult){
+        return GenericResponse.<D>builder()
                 .responseCode(RespCode.ValidationFailed)
                 .responseMessage("The input data is not correct")
                 .errors( validationResult )
-                .data(null)
+                .d(null)
                 .build();
     }
 
-    public static <DATA> GenericResponse<DATA> data(DATA data){
-        return GenericResponse.<DATA>builder()
+    public static <D> GenericResponse<D> data(D d){
+        return GenericResponse.<D>builder()
                 .responseCode(RespCode.Success)
                 .responseMessage("")
-                .data(data)
+                .d(d)
                 .build();
     }
 
-    public static <DATA> GenericResponse<DATA> error(String msg){
-        return GenericResponse.<DATA>builder()
+    public static <D> GenericResponse<D> error(String msg){
+        return GenericResponse.<D>builder()
                 .responseCode(RespCode.Success)
                 .responseMessage(msg)
-                .data(null)
+                .d(null)
                 .build();
     }
 
-    public static <DATA> GenericResponse<DATA> businessError(String msg){
-        return GenericResponse.<DATA>builder()
+    public static <D> GenericResponse<D> businessError(String msg){
+        return GenericResponse.<D>builder()
                 .responseCode(RespCode.BusinessError)
                 .responseMessage(msg)
-                .data(null)
+                .d(null)
                 .build();
     }
 }
